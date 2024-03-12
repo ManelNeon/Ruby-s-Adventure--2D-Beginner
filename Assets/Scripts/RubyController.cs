@@ -6,6 +6,8 @@ public class RubyController : MonoBehaviour
 {
     [SerializeField] float speed = 3.0f;
 
+    [SerializeField] GameObject projectilePrefab;
+
     public int maxHealth = 5;
 
     [HideInInspector] public int health { get { return currrentHealth; } }
@@ -36,6 +38,11 @@ public class RubyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Launch();
+        }
+
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
 
@@ -86,5 +93,15 @@ public class RubyController : MonoBehaviour
         
         currrentHealth = Mathf.Clamp(currrentHealth + amount, 0, maxHealth);
         Debug.Log(currrentHealth + "/" + maxHealth);
+    }
+
+    void Launch()
+    {
+        GameObject projectileObject = Instantiate(projectilePrefab, playerRB.position + Vector2.up * 0.5f,Quaternion.identity);
+
+        Projectile projectile = projectileObject.GetComponent<Projectile>();
+        projectile.Launch(lookDirection, 300);
+
+        animator.SetTrigger("Launch");
     }
 }
