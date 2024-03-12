@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class RubyController : MonoBehaviour
 {
+    [SerializeField] float speed = 3.0f;
+
+    public int maxHealth = 5;
+
+    [HideInInspector] public int health { get { return currrentHealth; } }
+    int currrentHealth;
+
     Rigidbody2D playerRB;
     float horizontal;
     float vertical;
@@ -12,6 +19,8 @@ public class RubyController : MonoBehaviour
     void Start()
     {
         playerRB = GetComponent<Rigidbody2D>();
+
+        currrentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -24,8 +33,14 @@ public class RubyController : MonoBehaviour
     void FixedUpdate()
     {
         Vector2 position = playerRB.position;
-        position.x = position.x + 3f * horizontal * Time.deltaTime;
-        position.y = position.y + 3f * vertical * Time.deltaTime;
+        position.x = position.x + speed * horizontal * Time.deltaTime;
+        position.y = position.y + speed * vertical * Time.deltaTime;
         playerRB.MovePosition(position);
+    }
+
+    public void ChangeHealth(int amount)
+    {
+        currrentHealth = Mathf.Clamp(currrentHealth + amount, 0, maxHealth);
+        Debug.Log(currrentHealth + "/" + maxHealth);
     }
 }
