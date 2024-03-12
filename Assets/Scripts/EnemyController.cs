@@ -10,6 +10,8 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] bool vertical;
 
+    [SerializeField] ParticleSystem smokeEffect;
+
     Rigidbody2D enemyRB;
 
     Animator animator;
@@ -85,6 +87,7 @@ public class EnemyController : MonoBehaviour
 
     public void Fix()
     {
+        smokeEffect.Stop();
         animator.SetTrigger("Fixed");
         broken = false;
         enemyRB.simulated = false;
