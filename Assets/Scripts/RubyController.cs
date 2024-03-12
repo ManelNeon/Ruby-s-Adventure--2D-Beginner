@@ -90,9 +90,9 @@ public class RubyController : MonoBehaviour
             isInvincible = true;
             invincibleTimer = timeInvincible;
         }
-        
         currrentHealth = Mathf.Clamp(currrentHealth + amount, 0, maxHealth);
-        Debug.Log(currrentHealth + "/" + maxHealth);
+
+        UIHealthBar.Instance.SetValue(currrentHealth / (float)maxHealth);
     }
 
     void Launch()
